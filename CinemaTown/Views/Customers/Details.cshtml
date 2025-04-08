@@ -1,0 +1,61 @@
+﻿@model CinemaTown.Models.Customer
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Customer Details</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-3"><b>Customer Name:</b></dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+        <dt class="col-sm-3">Customer ID:</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3"><b>Contact Information</b></dt>
+        <dd class="col-sm-9">
+            @Model.street_address<br />
+            @Model.city_address , @Model.state_address , @Model.zip_adress <br /><br />
+            phone: <a href="tel:@Model.phone">@Model.phone</a> &emsp; email: <a href="mailto:@Model.email_address">@Model.email_address</a>
+        </dd>
+    </dl>
+    <hr />
+    <div class="row">
+        <div class="col-sm-3">
+            @if (Model.MembershipTypeId > 1)
+            {
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Member</h3>
+                    </div>
+                    <div class="panel-body">
+                        @Model.MembershipType.Name <br />@Model.MembershipType.DiscountRate %
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Not a Member</h3>
+                    </div>
+                    <div class="panel-body">
+                        Not a premium Member
+                    </div>
+                </div>
+            }
+        </div>
+
+        <dl class="col-sm-9">
+            @if (Model.birthdate.HasValue)
+            {
+                <dt class="col-sm-3">Birthday:</dt>
+                <dd class="col-sm-9">@Model.birthdate.Value.ToShortDateString()</dd>
+            }
+        </dl>
+    </div>
+</div>
+

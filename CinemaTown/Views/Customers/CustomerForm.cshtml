@@ -1,0 +1,62 @@
+﻿@model CinemaTown.ViewModels.CustomerFormViewModel
+@{
+    ViewBag.Title = "CustomerForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customer Information</h2>
+
+@using (Html.BeginForm("Save", "Customers"))
+{
+<div class="container-fluid">
+    <hr />
+    <div class="col-md-6">
+        <div class="form-group">
+            <h3>@Html.Label("Required Information", new { @class = "text-warning" })</h3><br />
+            @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control w", placeholder = "Customer Name" })
+            @Html.ValidationMessageFor(m => m.Customer.Name)<br />
+            @Html.LabelFor(m => m.Customer.street_address)<br />
+            @Html.TextBoxFor(m => m.Customer.street_address, new { @class = "form-control", placeholder = "Street Address" })
+            @Html.ValidationMessageFor(m => m.Customer.street_address) <br />
+            @Html.TextBoxFor(m => m.Customer.city_address, new { @class = "form-control", placeholder = "City" })
+            @Html.ValidationMessageFor(m => m.Customer.city_address)<br />
+            @Html.TextBoxFor(m => m.Customer.state_address, new { @class = "form-control", placeholder = "State (XX)", maxlength = 2 })
+            @Html.ValidationMessageFor(m => m.Customer.state_address)<br />
+            @Html.TextBoxFor(m => m.Customer.zip_adress, "{0:#.#}", new { @class = "form-control", placeholder = "Zip Code", @type = "number" })
+            @Html.ValidationMessageFor(m => m.Customer.zip_adress)<br />
+            @Html.Label("Contact")
+            @Html.TextBoxFor(m => m.Customer.phone, "{0:#.#}", new { @class = "form-control", placeholder = "Phone", @type = "tel" })
+            @Html.ValidationMessageFor(m => m.Customer.phone)<br />
+           
+            @Html.LabelFor(m => m.Customer.MembershipTypeId)
+            @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        </div>
+        
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <h3>@Html.Label("Optional Information", new { @class = "text-warning" })</h3><br />
+            @Html.TextBoxFor(m => m.Customer.email_address, new { @class = "form-control", placeholder = "Email", @type = "email" })
+            @Html.ValidationMessageFor(m => m.Customer.email_address)<br />
+            @Html.TextBoxFor(m => m.Customer.birthdate, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "Birthdate (YYYY-MM-DD)" })
+            @Html.ValidationMessageFor(m => m.Customer.birthdate)
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.Customer.IsSubscribed) Subscribe to The Newsletter?
+            </label>
+        </div>
+        <hr />
+
+        @Html.HiddenFor(m => m.Customer.Id)
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+    </div>
+</div>
+ }
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    }
